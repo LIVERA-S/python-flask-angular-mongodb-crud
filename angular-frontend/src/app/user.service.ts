@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-  private baseUrl = 'http://localhost:5000/users';
+  private baseUrl = 'https://5000-liveras-pythonflaskangu-kbvjjdv17oe.ws-eu44.gitpod.io/';
 
   constructor(private http: HttpClient) { }
 

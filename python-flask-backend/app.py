@@ -5,15 +5,14 @@ from flask_cors import CORS
 import yaml
 
 app = Flask(__name__)
-config = yaml.load(open('database.yaml'))
-client = MongoClient(config['uri'])
+app.config["MONGO_URI"] = 'mongodb://Livera2003:Waduge78&@cluster0-shard-00-00.uylmr.mongodb.net:27017,cluster0-shard-00-01.uylmr.mongodb.net:27017,cluster0-shard-00-02.uylmr.mongodb.net:27017/Livera1?ssl=true&replicaSet=atlas-38dmxu-shard-0&authSource=admin&retryWrites=true&w=majority'
 # db = client.lin_flask
-db = client['knf-dev']
+db = client.Livera1
 CORS(app)
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return "ciao"
 
 @app.route('/users', methods=['POST', 'GET'])
 def data():
