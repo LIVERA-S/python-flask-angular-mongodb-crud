@@ -3,6 +3,8 @@ export class User {
     firstName: string;
     lastName: string;
     emailId: string;
+    phone:string;
+    date:string;
+    reason:string;
     active: boolean;
-
 }
