@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, jsonify
-from pymongo import MongoClient
+from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from flask_cors import CORS
-import yaml
+
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = 'mongodb://Livera2003:Waduge78&@cluster0-shard-00-00.uylmr.mongodb.net:27017,cluster0-shard-00-01.uylmr.mongodb.net:27017,cluster0-shard-00-02.uylmr.mongodb.net:27017/Livera1?ssl=true&replicaSet=atlas-38dmxu-shard-0&authSource=admin&retryWrites=true&w=majority'
 # db = client.lin_flask
-db = client.Livera1
+mongo = PyMongo(app)
 CORS(app)
 
 @app.route('/')
@@ -24,7 +24,7 @@ def data():
         lastName = body['lastName']
         emailId = body['emailId'] 
         # db.users.insert_one({
-        db['users'].insert_one({
+        mongo.db.users.insert_one({
             "firstName": firstName,
             "lastName": lastName,
             "emailId":emailId
@@ -38,7 +38,7 @@ def data():
     
     # GET all data from database
     if request.method == 'GET':
-        allData = db['users'].find()
+        allData = mongo.db.users.find()
         dataJson = []
         for data in allData:
             id = data['_id']
@@ -60,7 +60,7 @@ def onedata(id):
 
     # GET a specific data by id
     if request.method == 'GET':
-        data = db['users'].find_one({'_id': ObjectId(id)})
+        data = mongo.db.users.find_one({'_id': ObjectId(id)})
         id = data['_id']
         firstName = data['firstName']
         lastName = data['lastName']
@@ -76,7 +76,7 @@ def onedata(id):
         
     # DELETE a data
     if request.method == 'DELETE':
-        db['users'].delete_many({'_id': ObjectId(id)})
+        mongo.db.users.delete_many({'_id': ObjectId(id)})
         print('\n # Deletion successful # \n')
         return jsonify({'status': 'Data id: ' + id + ' is deleted!'})
 
@@ -87,7 +87,7 @@ def onedata(id):
         lastName = body['lastName']
         emailId = body['emailId']
 
-        db['users'].update_one(
+        mongo.db.users.update_one(
             {'_id': ObjectId(id)},
             {
                 "$set": {
