@@ -12,7 +12,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return "ciao"
+    return "Ciao00000"
 
 @app.route('/users', methods=['POST', 'GET'])
 def data():
@@ -20,51 +20,46 @@ def data():
     # POST a data to database
     if request.method == 'POST':
         body = request.json
-        firstName = body['firstName']
-        lastName = body['lastName']
+        name = body['name']
         emailId = body['emailId']
         phone = body['phone']
         date = body['date']
         reason = body['reason']
         # db.users.insert_one({
         mongo.db.users.insert_one({
-            "firstName": firstName,
-            "lastName": lastName,
+            "name": name,
             "emailId":emailId,
             "phone":phone,
-            "date":date,
-            "reason":reason
+            'date':date,
+            'reason':reason
         })
         return jsonify({
-            'status': 'Data is saved to our DB!',
-            "firstName": firstName,
-            "lastName": lastName,
-            "emailId":emailId,
-            "phone":phone,
-            "date":date,
-            "reason":reason
+            'status': 'Data is posted to MongoDB!',
+            'name': name,
+            'emailId':emailId,
+            'phone':phone,
+            'date':date,
+            'reason':reason
         })
     
     # GET all data from database
     if request.method == 'GET':
-        allData = mongo.db.users.find()
+        allData =  mongo.db.users.find()
         dataJson = []
         for data in allData:
             id = data['_id']
-            firstName = body['firstName']
-            lastName = body['lastName']
-            emailId = body['emailId']
-            phone = body['phone']
-            date = body['date']
-            reason = body['reason']
+            name = data['name']
+            emailId = data['emailId']
+            phone = data['phone']
+            date = data['date']
+            reason = data['reason']
             dataDict = {
                 'id': str(id),
-                "firstName": firstName,
-                "lastName": lastName,
-                "emailId":emailId,
-                "phone":phone,
-                "date":date,
-                "reason":reason
+                'name': name,
+                'emailId': emailId,
+                'phone':phone,
+                'date':date,
+                'reason':reason
             }
             dataJson.append(dataDict)
         print(dataJson)
@@ -77,20 +72,18 @@ def onedata(id):
     if request.method == 'GET':
         data = mongo.db.users.find_one({'_id': ObjectId(id)})
         id = data['_id']
-        firstName = body['firstName']
-        lastName = body['lastName']
-        emailId = body['emailId']
-        phone = body['phone']
-        date = body['date']
-        reason = body['reason']
+        name = data['name']
+        emailId = data['emailId']
+        phone = data['phone']
+        date = data['date']
+        reason = data['reason']
         dataDict = {
             'id': str(id),
-            "firstName": firstName,
-            "lastName": lastName,
-            "emailId":emailId,
-            "phone":phone,
-            "date":date,
-            "reason":reason
+            'name': name,
+            'emailId':emailId,
+            'phone':phone,
+            'date':date,
+            'reason':reason
         }
         print(dataDict)
         return jsonify(dataDict)
@@ -104,8 +97,7 @@ def onedata(id):
     # UPDATE a data by id
     if request.method == 'PUT':
         body = request.json
-        firstName = body['firstName']
-        lastName = body['lastName']
+        name = body['name']
         emailId = body['emailId']
         phone = body['phone']
         date = body['date']
@@ -115,9 +107,8 @@ def onedata(id):
             {'_id': ObjectId(id)},
             {
                 "$set": {
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "emailId":emailId,
+                    "name":name,
+                    "emailId": emailId,
                     "phone":phone,
                     "date":date,
                     "reason":reason

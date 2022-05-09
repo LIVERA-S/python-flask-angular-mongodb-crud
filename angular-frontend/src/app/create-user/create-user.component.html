@@ -1,14 +1,10 @@
 <h3>Create User</h3>
 <div [hidden]="submitted" style="width: 400px;">
   <form (ngSubmit)="onSubmit()">
+    
     <div class="form-group">
-      <label for="name">First Name</label>
-      <input type="text" class="form-control" id="firstName" required [(ngModel)]="user.firstName" name="firstName">
-    </div>
-
-    <div class="form-group">
-      <label for="name">Last Name</label>
-      <input type="text" class="form-control" id="lastName" required [(ngModel)]="user.lastName" name="lastName">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="user.name" name="name">
     </div>
 
     <div class="form-group">
@@ -23,7 +19,7 @@
 
     <div class="form-group">
       <label for="name">Date</label>
-      <input type="text" class="form-control" id="date" required [(ngModel)]="user.date" name="date">
+      <input type="date" class="form-control" id="date" required [(ngModel)]="user.date" name="date">
     </div>
 
     <div class="form-group">
