@@ -1,10 +1,9 @@
 export class User {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    emailId: string;
-    phone:string;
-    date:string;
-    reason:string;
+    _id: string ="";
+    name: string="";
+    emailId: string="";
+    phone:string="";
+    date:string="";
+    reason:string="";
     active: boolean;
 }
